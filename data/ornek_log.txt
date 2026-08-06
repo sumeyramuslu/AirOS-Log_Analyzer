@@ -1,0 +1,87 @@
+Jun 14 04:20:10 syslogd started: BusyBox v1.19.4
+Jun 14 04:20:14 provmode: Starting management radio
+Jun 14 04:20:19 dnsmasq[657]: started, version 2.84rc2 cachesize 150
+Jun 14 04:20:19 dnsmasq-dhcp[657]: DHCP, IP range 192.168.172.2 -- 192.168.172.254, lease time 10m
+Jun 14 04:20:19 dnsmasq-dhcp[657]: DHCP, sockets bound exclusively to interface ath1
+Jun 14 04:20:19 dnsmasq[657]: ignoring nameserver 192.168.172.1 - local interface
+Jun 14 04:20:19 dnsmasq[657]: read /etc/hosts - 2 addresses
+Jun 14 04:20:19 dnsmasq[657]: read /etc/prov-hosts.conf - 0 addresses
+Jun 14 04:20:30 dnsmasq[657]: read /etc/hosts - 2 addresses
+Jun 14 04:20:30 dnsmasq[657]: read /etc/prov-hosts.conf - 0 addresses
+Jun 14 04:20:34 system: Start
+Jun 14 04:20:34 syslogd exiting
+Jun 14 04:20:34 syslogd started: BusyBox v1.19.4
+Jun 14 04:20:34 FileSystem: Start check...
+Jun 14 04:20:35 init: Run: /bin/hostapd /etc/aaa1.cfg
+Jun 14 04:20:35 init: starting pid 847, tty '/dev/null': '/bin/hostapd /etc/aaa1.cfg'
+Jun 14 04:20:35 init: Run: /bin/dropbear -F -d /etc/persistent/dropbear_dss_host_key -r /etc/persistent/dropbear_rsa_host_key -p 22
+Jun 14 04:20:35 init: starting pid 849, tty '/dev/null': '/bin/dropbear -F -d /etc/persistent/dropbear_dss_host_key -r /etc/persistent/dropbear_rsa
+Jun 14 04:20:36 init: Run: /bin/lighttpd -D -f /etc/lighttpd.conf
+Jun 14 04:20:36 init: starting pid 850, tty '/dev/null': '/bin/lighttpd -D -f /etc/lighttpd.conf'
+Jun 14 04:20:36 wireless: ath0     Set Mode:Master
+Jun 14 04:20:36 dropbear[849]: Not backgrounding
+Jun 14 04:20:36 init: Run: /bin/ubntspecd -w -t -a -i wifi1 -j airview1 -m 4 -f 20 -s 200
+Jun 14 04:20:37 init: starting pid 852, tty '/dev/null': '/bin/ubntspecd -w -t -a -i wifi1 -j airview1 -m 4 -f 20 -s 200'
+Jun 14 04:20:37 init: Run: /bin/udapi-bridge -w -g -C /usr/etc/ssl/cert.pem -p 61780
+Jun 14 04:20:37 init: starting pid 853, tty '/dev/null': '/bin/udapi-bridge -w -g -C /usr/etc/ssl/cert.pem -p 61780'
+Jun 14 04:20:37 init: Run: /bin/udapi-server -g
+Jun 14 04:20:38 wireless: ath0     Channel Availability Check started on freq 5295 (center 5295)
+Jun 14 04:20:38 init: starting pid 859, tty '/dev/null': '/bin/udapi-server -g'
+Jun 14 04:20:38 init: Run: /bin/ulogger
+Jun 14 04:20:38 init: starting pid 864, tty '/dev/null': '/bin/ulogger'
+Jun 14 04:20:38 init: Run: /bin/ustatsd -d
+Jun 14 04:20:38 init: starting pid 865, tty '/dev/null': '/bin/ustatsd -d'
+Jun 14 04:20:38 init: Run: /bin/infctld
+Jun 14 04:20:38 init: starting pid 866, tty '/dev/null': '/bin/infctld'
+Jun 14 04:20:38 init: Run: /sbin/getty -L ttyS0 115200 vt100
+Jun 14 04:20:38 ustatsd[865]: Historical data header invalid
+Jun 14 04:20:39 udapi-server[859]: udapi-server 1.4.0-96-ga1373ee
+Jun 14 04:20:39 udapi-server[859]: UDAPI version v1.0
+Jun 14 04:20:41 lighttpd[850]: (server.c.1521) server started (lighttpd/1.4.54) 
+Jun 14 04:20:47 FileSystem: End check.
+Jun 14 04:21:36 httpd[1285]: Bad password attempt for 'poyraz' from 10.0.0.10
+Jun 14 04:21:45 wireless: ath0     Channel Availability Check stopped on freq 5295 (center 5295)
+Jun 14 04:22:02 httpd[1467]: Password auth succeeded for 'poyraz' from 10.0.0.10
+Jun 14 04:40:15 init: reloading /etc/inittab
+Jun 14 04:40:15 init: Run: /sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org
+Jun 14 04:40:15 init: starting pid 10466, tty '/dev/null': '/sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org'
+Jun 14 04:40:16 provmode: Reinitializing management radio
+Jun 14 04:40:17 init: process '/sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org' (pid 10466) exited. Scheduling for restart.
+Jun 14 04:40:17 init: Run: /sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org
+Jun 14 04:40:17 init: starting pid 10516, tty '/dev/null': '/sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org'
+Jun 14 04:40:18 dnsmasq[657]: read /etc/hosts - 2 addresses
+Jun 14 04:40:18 dnsmasq[657]: read /etc/prov-hosts.conf - 0 addresses
+Jun 14 04:40:19 init: process '/sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org' (pid 10516) exited. Scheduling for restart.
+Jun 14 04:40:19 init: Run: /sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org
+Jun 14 04:40:19 init: starting pid 10720, tty '/dev/null': '/sbin/ntpclient -n -s -c 0 -l -h 0.ubnt.pool.ntp.org'
+Jun 14 04:40:19 ubnt: Fastrestart complete
+Jun 14 04:40:20 init: process '/bin/infctld' (pid 866) exited. Scheduling for restart.
+Jun 14 04:40:20 init: Run: /bin/infctld
+Jun 14 04:40:20 init: starting pid 10741, tty '/dev/null': '/bin/infctld'
+Jun 14 04:51:53 wireless: ath1     Received auth from c0:35:32:4c:2f:5f. Status: Successful (0).
+Jun 14 04:51:53 wireless: ath1     Authenticated Station c0:35:32:4c:2f:5f (Successful)
+Jun 14 04:51:53 wireless: ath1     Sending auth to c0:35:32:4c:2f:5f. Status: Successful (0).
+Jun 14 04:51:53 wireless: ath1     Received assoc_req from c0:35:32:4c:2f:5f.
+Jun 14 04:51:53 wireless: ath1     Sending assoc_resp to c0:35:32:4c:2f:5f. Status: Successful (0).
+Jun 14 04:51:53 wireless: ath1     Registered node:C0:35:32:4C:2F:5F
+Jun 14 04:51:57 dnsmasq-dhcp[657]: DHCPDISCOVER(ath1) c0:35:32:4c:2f:5f 
+Jun 14 04:51:57 dnsmasq-dhcp[657]: DHCPOFFER(ath1) 192.168.172.209 c0:35:32:4c:2f:5f 
+Jun 14 04:51:57 dnsmasq-dhcp[657]: DHCPREQUEST(ath1) 192.168.172.209 c0:35:32:4c:2f:5f 
+Jun 14 04:51:57 dnsmasq-dhcp[657]: DHCPACK(ath1) 192.168.172.209 c0:35:32:4c:2f:5f DESKTOP-CMCTRBM
+Jun 14 04:52:01 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:01 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:01 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:02 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:02 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:02 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:02 lighttpd[850]: (mod_openssl.c.1762) SSL: -1 5 131 Connection reset by peer 
+Jun 14 04:52:08 wireless: ath1     Received deauth from c0:35:32:4c:2f:5f. Reason: Unspecified reason (1).
+Jun 14 04:52:08 wireless: ath1     Expired node:C0:35:32:4C:2F:5F
+Jun 14 04:52:08 wireless: ath1     Deauthenticated Station c0:35:32:4c:2f:5f (Unspecified reason)
+Jun 14 05:16:48 ulogger[864]: interface=eth0 link=DOWN
+Jun 14 05:16:50 ulogger[864]: interface=eth0 link=UP speed=100Mbps duplex=FULL
+Jun 14 05:18:52 ulogger[864]: interface=eth0 link=DOWN
+Jun 14 05:18:54 ulogger[864]: interface=eth0 link=UP speed=100Mbps duplex=FULL
+Jun 14 05:38:53 httpd[4785]: Password auth succeeded for 'poyraz' from 10.0.0.10
+Jun 14 05:53:35 wireless: ath0     Scan request completed
+Jun 14 07:12:48 httpd[13269]: Password auth succeeded for 'poyraz' from 10.0.0.10

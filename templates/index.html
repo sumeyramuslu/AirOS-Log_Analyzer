@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirOS Log Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#6366f1" stroke-width="2"/><path d="M8 12h8M12 8v8" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>AirOS Log Analyzer</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <span class="nav-label">Dashboard</span>
+          <a href="#" class="nav-item active" data-view="dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-label">Log İşlemleri</span>
+          <label class="nav-item clickable" id="btn-upload">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Log Dosyası Yükle
+          </label>
+          <input type="file" id="file-input" accept=".txt,.log" hidden>
+          <a href="#" class="nav-item" id="btn-fetch-modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>
+            Cihazdan Log Al
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-label">Analiz</span>
+          <a href="#table-section" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Açıklama
+          </a>
+          <a href="#problems-section" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Olası Sorunlar
+          </a>
+        </div>
+      </nav>
+
+      <div class="device-card" id="device-card">
+        <div class="device-card-header">
+          <span>Bağlı Cihaz</span>
+          <span class="badge inactive" id="device-status">Bekliyor</span>
+        </div>
+        <div class="device-info">
+          <div><span>Cihaz</span><strong id="dev-name">—</strong></div>
+          <div><span>IP</span><strong id="dev-ip">—</strong></div>
+          <div><span>Sürüm</span><strong id="dev-version">—</strong></div>
+          <div><span>Uptime</span><strong id="dev-uptime">—</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <header class="main-header">
+        <div>
+          <h1>GENEL ÖZET</h1>
+          <p class="subtitle" id="source-label">Log dosyası yükleyin veya cihazdan alın</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-ghost" id="btn-export" disabled>Rapor Dışa Aktar</button>
+        </div>
+      </header>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <h2>Henüz log verisi yok</h2>
+        <p>Sol menüden bir .txt log dosyası yükleyin veya cihaz IP adresi ile logları çekin.</p>
+        <div class="empty-actions">
+          <label class="btn btn-primary" for="file-input-empty">Log Dosyası Yükle</label>
+          <input type="file" id="file-input-empty" accept=".txt,.log" hidden>
+          <button class="btn btn-secondary" id="btn-fetch-empty">Cihazdan Log Al</button>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content hidden" id="dashboard-content">
+        <!-- KPI Cards -->
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div>
+            <div class="kpi-body">
+              <span class="kpi-label">Toplam Log</span>
+              <span class="kpi-value" id="kpi-total">0</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+            <div class="kpi-body">
+              <span class="kpi-label">Bilgi (INFO)</span>
+              <span class="kpi-value" id="kpi-info">0 <small id="kpi-info-pct">0%</small></span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon yellow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+            <div class="kpi-body">
+              <span class="kpi-label">Uyarı (WARNING)</span>
+              <span class="kpi-value" id="kpi-warning">0 <small id="kpi-warning-pct">0%</small></span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+            <div class="kpi-body">
+              <span class="kpi-label">Hata (ERROR)</span>
+              <span class="kpi-value" id="kpi-error">0 <small id="kpi-error-pct">0%</small></span>
+            </div>
+          </div>
+          <div class="kpi-card device-kpi">
+            <div class="kpi-body">
+              <span class="kpi-label">Cihaz</span>
+              <span class="kpi-value small" id="kpi-device">—</span>
+              <span class="kpi-sub" id="kpi-device-version">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <h3>OLAY DAĞILIMI</h3>
+            <div class="chart-wrap"><canvas id="chart-distribution"></canvas></div>
+          </div>
+          <div class="chart-card chart-wide">
+            <h3>ZAMAN ÇİZELGESİ</h3>
+            <div class="chart-wrap"><canvas id="chart-timeline"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h3>EN ÇOK GÖRÜLEN OLAYLAR</h3>
+            <div class="chart-wrap"><canvas id="chart-events"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Table + Problems -->
+        <div class="bottom-row">
+          <div class="panel" id="table-section">
+            <div class="panel-header">
+              <h3>AÇIKLAMA</h3>
+              <div class="panel-tools">
+                <input type="search" id="table-search" placeholder="Ara..." class="search-input">
+                <select id="table-filter" class="filter-select">
+                  <option value="all">Tümü</option>
+                  <option value="INFO">INFO</option>
+                  <option value="WARNING">WARNING</option>
+                  <option value="ERROR">ERROR</option>
+                </select>
+                <button class="btn btn-sm" id="btn-toggle-raw">Ham Log</button>
+                <button class="btn btn-sm" id="btn-table-export">Export</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="log-table">
+                <thead>
+                  <tr>
+                    <th>Zaman</th>
+                    <th>Seviye</th>
+                    <th>Olay</th>
+                    <th id="col-desc-header">Açıklama</th>
+                  </tr>
+                </thead>
+                <tbody id="log-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel" id="problems-section">
+            <div class="panel-header">
+              <h3>OLASI SORUNLAR VE DEĞERLENDİRME</h3>
+            </div>
+            <div class="problems-list" id="problems-list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Fetch Modal -->
+  <div class="modal-overlay hidden" id="fetch-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Cihazdan Log Al</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label>IP Adresi</label>
+        <input type="text" id="fetch-ip" placeholder="192.168.1.20" class="modal-input">
+        <label>Kullanıcı Adı</label>
+        <input type="text" id="fetch-user" value="ubnt" class="modal-input">
+        <label>Parola</label>
+        <input type="password" id="fetch-pass" value="ubnt" class="modal-input">
+        <p class="modal-hint">SSH (port 22) veya HTTP üzerinden log çekilir. Varsayılan: ubnt/ubnt</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="modal-cancel">İptal</button>
+        <button class="btn btn-primary" id="modal-fetch">Logları Al</button>
+      </div>
+      <div class="modal-loading hidden" id="modal-loading">
+        <div class="spinner"></div>
+        <span>Cihaza bağlanılıyor...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
