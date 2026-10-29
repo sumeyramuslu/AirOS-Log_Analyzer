@@ -15,7 +15,7 @@ PowerBeam ve Rocket M5 cihazlarından alınan AirOS 8 log dosyalarını analiz e
 ## Kurulum
 
 ```bash
-cd C:\Users\rumey\Projects\airos-log-analyzer
+cd AirOS-Log-Analyzer
 pip install -r requirements.txt
 python app.py
 ```
@@ -35,4 +35,4 @@ Reboot, Ethernet Down/Up, DHCP, Authentication, Deauthentication, DFS, Radar, NT
 
 ## Cihazdan Log Alma
 
-SSH (port 22) veya HTTP üzerinden log çekilir. Cihazda SSH aktif olmalıdır. Varsayılan kimlik bilgileri: `ubnt` / `ubnt`
+SSH (port 22) veya HTTP üzerinden log çekilir. Cihazda SSH aktif olmalıdır. 
